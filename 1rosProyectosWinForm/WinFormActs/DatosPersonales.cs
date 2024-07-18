@@ -17,7 +17,7 @@ namespace WinFormActs
         {
             InitializeComponent();
         }
-
+        //Holaaa comentarios
         private bool yaSeAcepto = false;
         private Font sintexto;
         private Color colorsintexto;
