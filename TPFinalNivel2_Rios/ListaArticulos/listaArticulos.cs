@@ -265,9 +265,12 @@ namespace ListaArticulos
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Articulo articulo = (Articulo)listaArticulosDGV.CurrentRow.DataBoundItem;
-            ImagenFRM imagen = new ImagenFRM(articulo.UrlImagen);
-            imagen.ShowDialog();   
+            if (listaArticulosDGV.CurrentRow != null)
+            {
+                Articulo articulo = (Articulo)listaArticulosDGV.CurrentRow.DataBoundItem;
+                ImagenFRM imagen = new ImagenFRM(articulo.UrlImagen);
+                imagen.ShowDialog();
+            }
         }
         private void listaArticulosDGV_SelectionChanged(object sender, EventArgs e)
         {
@@ -317,6 +320,9 @@ namespace ListaArticulos
         {
             List<Articulo> listaFiltrada;
             string filtro = buscarTXTB.Text;
+
+            if (listaArticulosDGV.CurrentRow == null)
+                imagenArticuloPBOX.Image = null;
 
             if (filtro.Length >= 1 && filtro.ToUpper() != "BUSCAR...")
             {
@@ -370,6 +376,7 @@ namespace ListaArticulos
         private void buscarAvanBTN_Click(object sender, EventArgs e)
         {
             ListaGestion gestion = new ListaGestion();
+
             try
             {
                 if (ValidarFiltro())
@@ -379,6 +386,8 @@ namespace ListaArticulos
                 string condicion = condicionCBOX.SelectedItem.ToString();
                 string filtro = buscarAvanTXTB.Text;
                 listaArticulosDGV.DataSource = gestion.Filtrar(campo, condicion, filtro);
+                if (listaArticulosDGV.CurrentRow == null)
+                    imagenArticuloPBOX.Image = null;
             }
             catch (Exception ex)
             {
